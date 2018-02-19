@@ -15,7 +15,7 @@ Control Spotify with your clipboard.
 Copy `sp` + the Spotify command you'd like to issue.
 
 <table>
-  <tr><th>Copy to your<br>clipboard</th><th>Description                                           </th></tr>
+  <tr><th>Copy to your clipboard</th><th>Description                                           </th></tr>
   <tr><td>sp setup                 </td><td>Setup spotify to authorize Clip Trigger               </td></tr>
   <tr><td>sp *                     </td><td>Add currently playing song to the *Starred* playlist  </td></tr>
   <tr><td>sp ?                     </td><td>Get info about currently playing song                 </td></tr>
