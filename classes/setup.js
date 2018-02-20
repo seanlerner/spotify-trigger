@@ -31,7 +31,8 @@ module.exports = class {
       win = new CT.electron.BrowserWindow({
         width:  800,
         height: 800,
-        name:  'Spotify'
+        name:  'Spotify',
+        webPreferences: { nodeIntegration: false }
       })
 
       win.loadURL(url)
