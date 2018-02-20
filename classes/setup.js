@@ -1,27 +1,39 @@
 module.exports = class {
 
   constructor(resolve, reject) {
-    const
-      win      = new CT.electron.BrowserWindow({width: 800, height: 800, name: 'Spotify'}),
-      type     = 'rawData',
-      bytes    =  this.buffer_bytes,
-      postData = [ { type, bytes } ],
-      uri      = CT.config.clip_trigger_spotify_server + 'login'
-
-    win.loadURL(uri, { postData })
-
-    win.on('close', () => {
-      resolve('Setup complete')
-    })
+    this.resolve = resolve
+    this.reject  = reject
+    this.get_spotify_authorize_link()
   }
 
-  get buffer_bytes() {
-    const
-      email       = clip_trigger_credentials().email,
-      password    = clip_trigger_credentials().password,
-      redirect_to = '/spotify/authorize'
-
-    return Buffer.from(`email=${email}&password=${password}&redirect_to=${redirect_to}`)
+  get_spotify_authorize_link() {
+    CT.vendor.request.post(
+      CT.config.clip_trigger_server + '/api/spotify/authorize',
+      { json: CT.config.login_credentials },
+      this.authorize_or_fail.bind(this)
+    )
   }
 
+  authorize_or_fail(err, resp, body) {
+    if (body && body.success)
+      this.setup(body)
+    else if (body && body.fail)
+      this.reject('Clip Trigger account required')
+    else
+      this.reject('Error authorizing Spotify')
+  }
+
+  setup(body) {
+    this.resolve('Please authorize Spotify')
+
+    const
+      url = body.success,
+      win = new CT.electron.BrowserWindow({
+        width:  800,
+        height: 800,
+        name:  'Spotify'
+      })
+
+      win.loadURL(url)
+  }
 }

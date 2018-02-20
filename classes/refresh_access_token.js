@@ -7,7 +7,7 @@ module.exports = class {
 
     const options = {
       method: 'POST',
-      uri:    CT.config.clip_trigger_spotify_server + 'api/spotify/refresh_access_token',
+      uri:    CT.config.clip_trigger_server + 'api/spotify/refresh_access_token',
       body:   clip_trigger_credentials(),
       json:   true
     }
