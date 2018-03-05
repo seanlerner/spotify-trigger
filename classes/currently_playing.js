@@ -25,12 +25,11 @@ module.exports = class {
   }
 
   song_details(item) {
-    const
-      song   = item.name,
-      artist = item.artists[0].name,
-      album  = item.album.name
-
-    return `${song} by ${artist} from the album ${album}`
+    return {
+      title:    item.artists[0].name,
+      subtitle: item.album.name,
+      body:     item.name
+    }
   }
 
 }

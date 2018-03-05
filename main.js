@@ -1,8 +1,10 @@
 module.exports = class {
 
   constructor() {
-    this.trigger = 'sp'
-    this.dir = path.join(CT.dir.triggers, 'spotify-trigger', 'classes')
+    this.trigger   = 'sp'
+    this.nice_name = 'Spotify'
+    this.dir       = path.join(CT.dir.triggers, 'spotify-trigger', 'classes')
+
     this.AddToStarred       = require(path.join(this.dir, 'add_to_starred'      ))
     this.StarredPlaylist    = require(path.join(this.dir, 'starred_playlist'    ))
     this.Device             = require(path.join(this.dir, 'device'              ))
@@ -39,19 +41,15 @@ module.exports = class {
       case '*'      : new this.TryRefreshTry(this.AddToStarred,       resolve, reject); break
       case '?'      : new this.TryRefreshTry(this.CurrentlyPlaying,   resolve, reject); break
       case 'dev'    : new this.TryRefreshTry(this.Device,             resolve, reject); break
-      case '-'      : new this.TryRefreshTry(this.VolumeDown,         resolve, reject); break
+      case 'sk'     : new this.TryRefreshTry(this.Next,               resolve, reject); break
       case 'p'      : new this.TryRefreshTry(this.PlayOrPause,        resolve, reject); break
-      case 'pl'     : new this.TryRefreshTry(this.Playing,            resolve, reject); break
       case 'r'      : new this.TryRefreshTry(this.PlayRandomPlaylist, resolve, reject); break
       case 'sh'     : new this.TryRefreshTry(this.ToggleShuffle,      resolve, reject); break
-      case 'sh?'    : new this.TryRefreshTry(this.ShuffleState,       resolve, reject); break
       case 'shoff'  : new this.TryRefreshTry(this.TurnOffShuffle,     resolve, reject); break
       case 'shon'   : new this.TryRefreshTry(this.TurnOnShuffle,      resolve, reject); break
-      case 'sk'     : new this.TryRefreshTry(this.Next,               resolve, reject); break
-      case 'st'     : new this.TryRefreshTry(this.StarredPlaylist,    resolve, reject); break
+      case '-'      : new this.TryRefreshTry(this.VolumeDown,         resolve, reject); break
       case '='      : new this.TryRefreshTry(this.VolumeUp,           resolve, reject); break
       case '+'      : new this.TryRefreshTry(this.VolumeUp,           resolve, reject); break
-      case 'vol'    : new this.TryRefreshTry(this.Volume,             resolve, reject); break
       default       : reject(`Unrecognized spotify command: ${spotify_command}`)
     }
   }
