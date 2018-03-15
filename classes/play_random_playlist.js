@@ -1,13 +1,14 @@
 module.exports = class {
 
-  constructor(resolve, reject) {
+  constructor(resolve, reject, args) {
     this.resolve = resolve
     this.reject  = reject
+    this.args    = args
     this.get_shuffle_play()
   }
 
   get_shuffle_play() {
-    new CT.triggers.sp.RandomPlaylist(this.play_playlist.bind(this), this.reject)
+    new CT.triggers.sp.RandomPlaylist(this.play_playlist.bind(this), this.reject, this.args)
   }
 
   play_playlist(playlist) {

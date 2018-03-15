@@ -1,14 +1,15 @@
 module.exports = class {
 
-  constructor(fn, resolve, reject) {
+  constructor(fn, resolve, reject, args) {
     this.fn      = fn
     this.resolve = resolve
     this.reject  = reject
+    this.args    = args
     this.try_first_time()
   }
 
   try_first_time() {
-    new this.fn(this.resolve, this.refresh_and_try_again.bind(this))
+    new this.fn(this.resolve, this.refresh_and_try_again.bind(this), this.args)
   }
 
   refresh_and_try_again(err, res, body) {
@@ -22,7 +23,7 @@ module.exports = class {
   }
 
   try_second_time() {
-    new this.fn(this.resolve, this.final_reject.bind(this))
+    new this.fn(this.resolve, this.final_reject.bind(this), this.args)
   }
 
   final_reject(err, res, body) {

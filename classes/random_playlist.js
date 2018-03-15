@@ -1,8 +1,9 @@
 module.exports = class {
 
-  constructor(resolve, reject) {
+  constructor(resolve, reject, args) {
     this.resolve   = resolve
     this.reject    = reject
+    this.args      = args
     this.playlists = []
     this.offset    = 0
     this.get_50_playlists()
@@ -43,11 +44,11 @@ module.exports = class {
     if (this.desired_playlists.length > 0)
       this.resolve(this.desired_playlists[this.random_number])
     else
-      this.reject(`No playlists match '${this.filter_from_clipboard}'`)
+      this.reject(`No playlists match '${this.filter_from_args}'`)
   }
 
   set_filter() {
-    this.filter_from_clipboard = CT.clipboard.content.split(' ').slice(1).join(' ')
+    this.filter_from_args = this.args.split(' ').slice(1).join(' ')
   }
 
   set_desired_playlists() {
@@ -55,7 +56,7 @@ module.exports = class {
   }
 
   matches_filter(playlist) {
-    return playlist.name.toLowerCase().indexOf(this.filter_from_clipboard.toLowerCase()) != -1
+    return playlist.name.toLowerCase().indexOf(this.filter_from_args.toLowerCase()) != -1
   }
 
   get random_number() {
